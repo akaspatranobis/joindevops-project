@@ -11,5 +11,5 @@ provider "google" {
   # Configuration options
   project = var.project_id
   region = var.region
-  credentials = file("${path.module}/gcp-key.json")
+  credentials = file("gcp-key.json")
 }

@@ -5,11 +5,13 @@ resource "google_sql_database_instance" "default" {
 
   settings {
     tier = "db-f1-micro"
-
+    
     ip_configuration {
-      ipv4_enabled    = false
-      private_network = module.vpc.self_link
+      ipv4_enabled                                  = false
+      private_network                               = var.network
+      enable_private_path_for_google_cloud_services = true
     }
+    
 
     backup_configuration {
       enabled = true

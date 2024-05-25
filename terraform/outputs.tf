@@ -2,12 +2,8 @@ output "gke_cluster_name" {
   value = module.gke.name
 }
 
-output "gke_cluster_endpoint" {
-  value = module.gke.endpoint
-}
-
-output "gke_cluster_ca_certificate" {
-  value = module.gke.ca_certificate
+output "network_self_link" {
+  value = module.vpc.network_self_link
 }
 
 output "sql_instance_connection_name" {

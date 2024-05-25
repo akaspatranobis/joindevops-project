@@ -3,7 +3,3 @@ variable "project_id" {
   type        = string
 }
 
-variable "network" {
-  description = "The name of the network to attach this firewall rule to."
-  type        = string
-}

@@ -3,7 +3,7 @@ metadata:
   name: web-config
 data:
   PORT: 3001
-  API_HOST: "http://node-api"
+  API_HOST: node-api.default.svc.cluster.local
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -24,7 +24,7 @@ spec:
       containers:
       - name: node-web
         imagePullPolicy: Always
-        image: 752692907119.dkr.ecr.ap-south-1.amazonaws.com/node-web:latest
+        image: us-central1-docker.pkg.dev/gcp-classes-395503/my-first-docker-registry/web:latest
         envFrom:
         - configMapRef:
             name: web-config

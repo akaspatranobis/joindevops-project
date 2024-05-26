@@ -7,8 +7,8 @@ resource "google_compute_firewall" "gke_to_sql" {
     ports    = ["3306"]
   }
 
-  source_ranges = ["10.0.0.0/8"]
-  target_tags   = ["gke-node"]
+  source_ranges = ["10.2.0.0/16"]
+  target_tags   = ["gke-node","cloudsql"]
 }
 
 resource "google_compute_firewall" "allow_ssh" {

@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', changelog: false, credentialsId: 'git_creds', poll: false, url: 'https://github.com/akaspatranobis/joindevops-project.git'
+                git branch: 'master', changelog: false, credentialsId: 'git_creds', poll: false, url: 'https://github.com/akaspatranobis/joindevops-project.git'
             }
         }
 

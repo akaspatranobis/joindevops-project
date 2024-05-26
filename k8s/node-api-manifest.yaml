@@ -1,4 +1,4 @@
----
+# ConfigMap for application configuration
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -6,9 +6,10 @@ metadata:
 data:
   API_PORT: "3000"
   DB: "mydb"
-  DBHOST: "gcp-classes-395503:europe-west2:my-sql-instance"
+  DBHOST: "127.0.0.1"
   DBPORT: "3306"
 ---
+# Secret for sensitive data
 apiVersion: v1
 kind: Secret
 metadata:
@@ -18,6 +19,7 @@ data:
   DBUSER: YWRtaW4=
   DBPASS: cGFzc3dvcmQ=
 ---
+# Deployment for the Node.js API
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -45,7 +47,21 @@ spec:
             name: api-secret
         ports:
         - containerPort: 3000
+      - name: cloud-sql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.28.1
+        command: ["/cloud_sql_proxy", 
+                  "-instances=gcp-classes-395503:europe-west2:my-sql-instance=tcp:3306",
+                  "-credential_file=/secrets/cloudsql/credentials.json"]
+        volumeMounts:
+        - name: cloudsql-instance-credentials
+          mountPath: /secrets/cloudsql
+          readOnly: true
+      volumes:
+      - name: cloudsql-instance-credentials
+        secret:
+          secretName: cloudsql-instance-credentials
 ---
+# Service to expose the Node.js API
 apiVersion: v1
 kind: Service
 metadata:
@@ -58,4 +74,3 @@ spec:
   - name: http
     port: 80
     targetPort: 3000
-
